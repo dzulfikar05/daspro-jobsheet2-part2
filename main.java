@@ -17,13 +17,13 @@ public class main {
 
         if (pilihan == 1) {
             totalBelanja += 10000;
-            System.out.println("Anda memesan Kopi. Total belanja Anda: Rp " + totalBelanja);
+            System.out.println("Anda memesan Paket 1. Total belanja Anda: Rp " + totalBelanja);
         } else if (pilihan == 2) {
             totalBelanja += 15000;
-            System.out.println("Anda memesan Teh. Total belanja Anda: Rp " + totalBelanja);
+            System.out.println("Anda memesan Paket 2. Total belanja Anda: Rp " + totalBelanja);
         } else if (pilihan == 3) {
             totalBelanja += 20000;
-            System.out.println("Anda memesan Roti. Total belanja Anda: Rp " + totalBelanja);
+            System.out.println("Anda memesan Paket 3. Total belanja Anda: Rp " + totalBelanja);
         } else {
             System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
         }
