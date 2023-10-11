@@ -3,41 +3,79 @@ import java.util.Scanner;
 public class main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-
+        String username, password, user = "kasir", pass = "kasir";
         System.out.println("Selamat datang di Cafe JTI");
-        double totalBelanja = 0;
+        double jumlahUang, kembalian, totalBelanja = 0;
+        int pilihan;
 
-        System.out.println("Menu:");
-        System.out.println("1. Paket 10.000 (2 Roti Panggang + 1 Teh Hangat)");
-        System.out.println("2. Paket 15.000 (5 Gorengan + 1 Kopi Hitam + 100gr Kacang Kulit)");
-        System.out.println("3. Paket 20.000 (5 Roti Panggang + 2 Kopi Susu)");
+        while (true){
+            System.out.println("");
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            System.out.print("Pilih salah satu (1/2) : ");
+            pilihan = input.nextInt();
+            switch(pilihan) {
+                case 1:
+                    System.out.println();
+                    System.out.println("---  LOGIN  ---");
+                    input.nextLine();
+                    System.out.println("Masukkan username anda :");
+                    username = input.nextLine();
+                    System.out.println("Masukkan password anda :");
+                    password = input.nextLine();
 
-        System.out.print("Pilih menu (1/2/3): ");
-        int pilihan = input.nextInt();
+                    if(user.equals(username) && pass.equals(password)){
+                        System.out.println();
+                        System.out.println("Login Berhasil !");
+                        while (true) {
+                            System.out.println();
+                            System.out.println("Menu:");
+                            System.out.println("1. Kopi (Rp 10,000)");
+                            System.out.println("2. Teh (Rp 8,000)");
+                            System.out.println("3. Roti (Rp 5,000)");
+                            System.out.println("4. Selesai Memesan");
 
-        if (pilihan == 1) {
-            totalBelanja += 10000;
-            System.out.println("Anda memesan Paket 1. Total belanja Anda: Rp " + totalBelanja);
-        } else if (pilihan == 2) {
-            totalBelanja += 15000;
-            System.out.println("Anda memesan Paket 2. Total belanja Anda: Rp " + totalBelanja);
-        } else if (pilihan == 3) {
-            totalBelanja += 20000;
-            System.out.println("Anda memesan Paket 3. Total belanja Anda: Rp " + totalBelanja);
-        } else {
-            System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
+                            System.out.print("Pilih menu (1/2/3/4): ");
+                            pilihan = input.nextInt();
+
+                            System.out.println();
+
+                            if (pilihan == 1) {
+                                totalBelanja += 10000;
+                            } else if (pilihan == 2) {
+                                totalBelanja += 8000;
+                            } else if (pilihan == 3) {
+                                totalBelanja += 5000;
+                            } else if (pilihan == 4) {
+                                break;
+                            } else {
+                                System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
+                            }
+
+                            System.out.println();
+                            System.out.println("Total belanja Anda: Rp " + totalBelanja);
+                        }
+
+                        System.out.print("Masukkan jumlah uang yang diberikan: ");
+                        jumlahUang = input.nextDouble();
+
+                        if (jumlahUang >= totalBelanja) {
+                            kembalian = jumlahUang - totalBelanja;
+                            System.out.println("Terima kasih! Kembalian Anda: Rp " + kembalian);
+                        } else {
+                            System.out.println("Maaf, uang yang diberikan kurang. Transaksi dibatalkan.");
+                        }
+                    }else{
+                        System.out.println();
+                        System.out.println("Login Gagal! Username atau Password Salah.");
+                        break;
+                    }
+                case 2:
+                    return;
+                default:
+                    System.out.println("Pilihan anda tidak tersedia.");
+              }
+              
         }
-
-        System.out.print("Masukkan jumlah uang yang diberikan: ");
-        double jumlahUang = input.nextDouble();
-
-        if (jumlahUang >= totalBelanja) {
-            double kembalian = jumlahUang - totalBelanja;
-            System.out.println("Terima kasih! Kembalian Anda: Rp " + kembalian);
-        } else {
-            System.out.println("Maaf, uang yang diberikan kurang. Transaksi dibatalkan.");
-        }
-
-        input.close();
     }
 }

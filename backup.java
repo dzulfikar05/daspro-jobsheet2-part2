@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
-public class mainv1 {
+public class backup {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        double jumlahUang, kembalian, totalBelanja = 0;
+        double jumlahUang, kembalian, totalBelanja = 0, diskon=0;
         int pilihan;
         String[] users = {"kasir", "kasir"};
         String username, password;
@@ -72,9 +72,7 @@ public class mainv1 {
                         break;
                     }
                 case 2:
-                    // System.out.println();
                     return;
-                    // break;
                 default:
                     System.out.println("Pilihan anda tidak tersedia.");
               }
