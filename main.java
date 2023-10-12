@@ -79,19 +79,19 @@ public class main {
                             if (pilihan == 1) {
                                 System.out.print("Masukkan jumlah yang dipesan :");
                                 kopi += input.nextInt();
-                                totalBelanja += kopi * 10000;
+                                totalBelanja = kopi * 10000;
                                 System.out.println();
 
                             } else if (pilihan == 2) {
                                 System.out.print("Masukkan jumlah yang dipesan :");
                                 teh += input.nextInt();
-                                totalBelanja += teh * 8000;
+                                totalBelanja = teh * 8000;
                                 System.out.println();
 
                             } else if (pilihan == 3) {
                                 System.out.print("Masukkan jumlah yang dipesan :");
                                 roti += input.nextInt();
-                                totalBelanja += roti * 5000;
+                                totalBelanja = roti * 5000;
                                 System.out.println();
 
                             } else if (pilihan == 4) {
@@ -100,43 +100,44 @@ public class main {
                                 System.out.println();
                                 System.out.println("Pilih menu yang ingin anda ubah.");
                                 System.out.println();
-                                System.out.println("1. Roti : " + roti);
-                                System.out.println("2. Kopi : " + kopi);
-                                System.out.println("3. Teh : " + teh);
+                                System.out.println("1. Kopi : " + kopi);
+                                System.out.println("2. Teh : " + teh);
+                                System.out.println("3. Roti : " + roti);
                                 System.out.println();
                                 System.out.println("Pilih salah satu (1/2/3): ");
                                 pilihan = input.nextInt();
 
                                 if (pilihan == 1) {
+                                    System.out.print("Masukkan jumlah terbaru:");
+                                    totalBelanja = totalBelanja - (kopi * 10000);
+                                    kopi = input.nextInt();
+                                    System.out.println();
+                                    totalBelanja = totalBelanja + (kopi * 10000);
+                                    System.out.println("Data berhasil diubah !");
+                                    System.out.println();
+                                    System.out.println("Kopi : " + kopi);
+                                    System.out.println();
+                                } else if (pilihan == 2) {
+                                    System.out.print("Masukkan jumlah terbaru :");
+                                    totalBelanja = totalBelanja - (teh * 8000);
+                                    teh = input.nextInt();
+                                    totalBelanja = totalBelanja + (teh * 8000);
+                                    System.out.println();
+                                    System.out.println("Data berhasil diubah !");
+                                    System.out.println();
+                                    System.out.println("Kopi : " + kopi);
+                                    System.out.println();
+                                } else if (pilihan == 3) {
                                     System.out.println();
                                     System.out.print("Masukkan jumlah terbaru:");
+                                    totalBelanja = totalBelanja - (roti * 5000);
                                     roti = input.nextInt();
-                                    totalBelanja = roti * 5000;
+                                    totalBelanja = totalBelanja + (roti * 5000);
                                     System.out.println();
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
                                     System.out.println("Roti : " + roti);
                                     System.out.println();
-                                } else if (pilihan == 2) {
-                                    System.out.print("Masukkan jumlah terbaru:");
-                                    kopi = input.nextInt();
-                                    System.out.println();
-                                    totalBelanja = kopi * 5000;
-                                    System.out.println("Data berhasil diubah !");
-                                    System.out.println();
-                                    System.out.println("Kopi : " + kopi);
-                                    System.out.println();
-
-                                } else if (pilihan == 3) {
-                                    System.out.print("Masukkan jumlah terbaru :");
-                                    teh = input.nextInt();
-                                    totalBelanja = teh * 5000;
-                                    System.out.println();
-                                    System.out.println("Data berhasil diubah !");
-                                    System.out.println();
-                                    System.out.println("Kopi : " + kopi);
-                                    System.out.println();
-
                                 }
 
                             } else {
