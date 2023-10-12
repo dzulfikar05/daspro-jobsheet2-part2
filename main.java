@@ -111,6 +111,7 @@ public class main {
                                     System.out.println();
                                     System.out.print("Masukkan jumlah terbaru:");
                                     roti = input.nextInt();
+                                    totalBelanja = roti * 5000;
                                     System.out.println();
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
@@ -120,6 +121,7 @@ public class main {
                                     System.out.print("Masukkan jumlah terbaru:");
                                     kopi = input.nextInt();
                                     System.out.println();
+                                    totalBelanja = kopi * 5000;
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
                                     System.out.println("Kopi : " + kopi);
@@ -128,6 +130,7 @@ public class main {
                                 } else if (pilihan == 3) {
                                     System.out.print("Masukkan jumlah terbaru :");
                                     teh = input.nextInt();
+                                    totalBelanja = teh * 5000;
                                     System.out.println();
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
