@@ -82,6 +82,8 @@ public class backup {
                         System.out.println("| Pembayaran |");
                         System.out.println("=============");
                         System.out.println();
+                        System.out.println("Jumlah uang yang harus anda bayarkan adalah sebesar Rp " + totalBelanja);
+                        System.out.println();
                         System.out.print("Masukkan jumlah uang yang diberikan: ");
                         jumlahUang = input.nextDouble();
 
