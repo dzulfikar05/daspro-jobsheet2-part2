@@ -135,7 +135,7 @@ public class backup {
                             if (roti != 0) {
                                 System.out.println("|     Roti             |       "+roti+"       |    "+roti *5000+"   |");
                             }
-                            System.out.println("========================================================");
+                            System.out.println("--------------------------------------------------------");
                             System.out.println("|     Total                             |   "+totalBelanja+"    |");
                             System.out.println("|     Bayar                             |   "+jumlahUang+"    |");
                             System.out.println("|                                                      |");
@@ -163,7 +163,6 @@ public class backup {
                 default:
                     System.out.println("Pilihan anda tidak tersedia.");
             }
-
         }
     }
 }
