@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class main {
+public class backup {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         String username, password, user = "kasir", pass = "kasir";
@@ -53,7 +53,6 @@ public class main {
                             System.out.println();
                             System.out.println("Ketik 4 jika proses pemesanan sudah selesai.");
                             if (roti != 0 || kopi != 0 || teh != 0) {
-                                System.out.println("Ketik 5 jika ingin mengubah jumlah pesanan.");
                                 System.out.println();
                                 System.out.println("Pesanan");
                             }
@@ -71,7 +70,7 @@ public class main {
                                 System.out.println("Total belanja Anda: Rp " + totalBelanja);
                             }
                             System.out.println();
-                            System.out.print("Pilih menu (1/2/3/4/5): ");
+                            System.out.print("Pilih menu (1/2/3/4): ");
                             pilihan = input.nextInt();
 
                             System.out.println();
@@ -96,46 +95,6 @@ public class main {
 
                             } else if (pilihan == 4) {
                                 break;
-                            }else if (pilihan == 5) {
-                                System.out.println();
-                                System.out.println("Pilih menu yang ingin anda ubah.");
-                                System.out.println();
-                                System.out.println("1. Roti : " + roti);
-                                System.out.println("2. Kopi : " + kopi);
-                                System.out.println("3. Teh : " + teh);
-                                System.out.println();
-                                System.out.println("Pilih salah satu (1/2/3): ");
-                                pilihan = input.nextInt();
-
-                                if (pilihan == 1) {
-                                    System.out.println();
-                                    System.out.print("Masukkan jumlah terbaru:");
-                                    roti = input.nextInt();
-                                    System.out.println();
-                                    System.out.println("Data berhasil diubah !");
-                                    System.out.println();
-                                    System.out.println("Roti : " + roti);
-                                    System.out.println();
-                                } else if (pilihan == 2) {
-                                    System.out.print("Masukkan jumlah terbaru:");
-                                    kopi = input.nextInt();
-                                    System.out.println();
-                                    System.out.println("Data berhasil diubah !");
-                                    System.out.println();
-                                    System.out.println("Kopi : " + kopi);
-                                    System.out.println();
-
-                                } else if (pilihan == 3) {
-                                    System.out.print("Masukkan jumlah terbaru :");
-                                    teh = input.nextInt();
-                                    System.out.println();
-                                    System.out.println("Data berhasil diubah !");
-                                    System.out.println();
-                                    System.out.println("Kopi : " + kopi);
-                                    System.out.println();
-
-                                }
-
                             } else {
                                 System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
                             }
