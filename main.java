@@ -3,8 +3,11 @@ import java.util.Scanner;
 public class main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        String username, password, user = "kasir", pass = "kasir";
+        String user[] = {"kasir", "kasir"};
+        String username, password;
         double jumlahUang, kembalian, totalBelanja = 0;
+        String menu[] = {"kopi", "Teh", "Roti"};
+        String harga[] = {"10000", "8000", "5000"};
         int pilihan, kopi = 0, teh = 0, roti = 0;
 
         System.out.println("=============================");
@@ -32,7 +35,7 @@ public class main {
                     System.out.print("Masukkan password anda :");
                     password = input.nextLine();
 
-                    if (user.equals(username) && pass.equals(password)) {
+                    if (user[0].equals(username) && user[1].equals(password)) {
                         System.out.println();
                         System.out.println("Login Berhasil !");
                         System.out.println();
@@ -46,9 +49,12 @@ public class main {
                             System.out.println("==============================================");
                             System.out.println("|  No  |   Makanan & Minuman   |     Harga    |");
                             System.out.println("==============================================");
-                            System.out.println("|  1.  |   Kopi                |   Rp 10,000  |");
-                            System.out.println("|  2.  |   Teh                 |   Rp  8,000  |");
-                            System.out.println("|  3.  |   Roti                |   Rp  5,000  |");
+
+                            for (int i=0; i<menu.length; i++){
+
+                                System.out.println("|  "+(i+1)+".  |   "+ menu[i]+"                |   Rp "+harga[i]+"  |");
+                            }
+
                             System.out.println("==============================================");
                             System.out.println();
                             System.out.println("Ketik 4 jika proses pemesanan sudah selesai.");
