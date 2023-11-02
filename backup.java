@@ -6,10 +6,9 @@ public class backup {
         String user[] = {"kasir", "kasir"};
         String username, password;
         double jumlahUang, kembalian, totalBelanja = 0;
-        String menu[] = {"kopi", "Teh", "Roti"};
-        String harga[] = {"10000", "8000", "5000"};
-        int pilihan, kopi = 0, teh = 0, roti = 0;
-
+        String menu[][] = {{"Kopi", "10000"}, {"Teh", "8000"}, {"Roti", "5000"}};
+        int  pilihan, kopi = 0, teh = 0, roti = 0, harga[] = {10000, 8000, 5000};
+        int jumlahBeli[]= {0, 0, 0};
         System.out.println("=============================");
         System.out.println("| Selamat datang di Cafe JTI |");
         System.out.println("=============================");
@@ -52,26 +51,33 @@ public class backup {
 
                             for (int i=0; i<menu.length; i++){
 
-                                System.out.println("|  "+(i+1)+".  |   "+ menu[i]+"                |   Rp "+harga[i]+"  |");
+                                System.out.println("|  "+(i+1)+".  |   "+ menu[i][0]+"                |   Rp "+menu[i][1]+"  |");
                             }
 
                             System.out.println("==============================================");
                             System.out.println();
                             System.out.println("Ketik 4 jika proses pemesanan sudah selesai.");
-                            if (roti != 0 || kopi != 0 || teh != 0) {
+                            if (jumlahBeli[0] != 0 || jumlahBeli[1] != 0 || jumlahBeli[2] != 0) {
                                 System.out.println("Ketik 5 jika ingin mengubah jumlah pesanan.");
                                 System.out.println();
                                 System.out.println("Pesanan");
                             }
-                            if (roti != 0) {
-                                System.out.println("Roti : " + roti);
+
+                            for (int i = 0; i<menu.length; i++){
+                                if (jumlahBeli[i] != 0) {
+                                    System.out.println( menu[i][0]+" : " + jumlahBeli[i]);
+                                }
                             }
-                            if (kopi != 0) {
-                                System.out.println("Kopi : " + kopi);
-                            }
-                            if (teh != 0) {
-                                System.out.println("Teh : " + teh);
-                            }
+                            // if (jumlahBeli[0] != 0) {
+                            //     System.out.println( menu[0]+" : " + kopi);
+                            // }
+                            // if (jumlahBeli[1] != 0) {
+                            //     System.out.println( menu[1]+" : " + teh);
+                            // }
+                            // if (jumlahBeli[2] != 0) {
+                            //     System.out.println( menu[2]+" : " + roti);
+                            // }
+
                             if (totalBelanja != 0) {
                                 System.out.println();
                                 System.out.println("Total belanja Anda: Rp " + totalBelanja);
@@ -84,20 +90,20 @@ public class backup {
 
                             if (pilihan == 1) {
                                 System.out.print("Masukkan jumlah yang dipesan :");
-                                kopi += input.nextInt();
-                                totalBelanja = kopi * 10000;
+                                jumlahBeli[0] += input.nextInt();
+                                totalBelanja += jumlahBeli[0] * harga[0];
                                 System.out.println();
 
                             } else if (pilihan == 2) {
                                 System.out.print("Masukkan jumlah yang dipesan :");
-                                teh += input.nextInt();
-                                totalBelanja = teh * 8000;
+                                jumlahBeli[1] += input.nextInt();
+                                totalBelanja += jumlahBeli[1] * harga[1];
                                 System.out.println();
 
                             } else if (pilihan == 3) {
                                 System.out.print("Masukkan jumlah yang dipesan :");
-                                roti += input.nextInt();
-                                totalBelanja = roti * 5000;
+                                jumlahBeli[2] += input.nextInt();
+                                totalBelanja += jumlahBeli[2] * harga[2];
                                 System.out.println();
 
                             } else if (pilihan == 4) {
@@ -106,43 +112,47 @@ public class backup {
                                 System.out.println();
                                 System.out.println("Pilih menu yang ingin anda ubah.");
                                 System.out.println();
-                                System.out.println("1. Kopi : " + kopi);
-                                System.out.println("2. Teh : " + teh);
-                                System.out.println("3. Roti : " + roti);
+                                for (int i = 0; i<menu.length; i++){
+                                    System.out.println( (i+1)+". "+menu[i][0]+" : " + jumlahBeli[i]);
+                                    
+                                }
+                                // System.out.println("1. Kopi : " + kopi);
+                                // System.out.println("2. Teh : " + teh);
+                                // System.out.println("3. Roti : " + roti);
                                 System.out.println();
                                 System.out.println("Pilih salah satu (1/2/3): ");
                                 pilihan = input.nextInt();
 
                                 if (pilihan == 1) {
                                     System.out.print("Masukkan jumlah terbaru:");
-                                    totalBelanja = totalBelanja - (kopi * 10000);
-                                    kopi = input.nextInt();
+                                    totalBelanja = totalBelanja - (jumlahBeli[0] * harga[0]);
+                                    jumlahBeli[0] = input.nextInt();
                                     System.out.println();
-                                    totalBelanja = totalBelanja + (kopi * 10000);
+                                    totalBelanja = totalBelanja + (jumlahBeli[0] * harga[0]);
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
-                                    System.out.println("Kopi : " + kopi);
+                                    System.out.println(menu[0][0]+" : " + jumlahBeli[0]);
                                     System.out.println();
                                 } else if (pilihan == 2) {
                                     System.out.print("Masukkan jumlah terbaru :");
-                                    totalBelanja = totalBelanja - (teh * 8000);
-                                    teh = input.nextInt();
-                                    totalBelanja = totalBelanja + (teh * 8000);
+                                    totalBelanja = totalBelanja - (jumlahBeli[1] * harga[1]);
+                                    jumlahBeli[1] = input.nextInt();
+                                    totalBelanja = totalBelanja + (jumlahBeli[1] * harga[1]);
                                     System.out.println();
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
-                                    System.out.println("Kopi : " + kopi);
+                                    System.out.println(menu[1][0]+" : " + jumlahBeli[1]);
                                     System.out.println();
                                 } else if (pilihan == 3) {
                                     System.out.println();
                                     System.out.print("Masukkan jumlah terbaru:");
-                                    totalBelanja = totalBelanja - (roti * 5000);
-                                    roti = input.nextInt();
-                                    totalBelanja = totalBelanja + (roti * 5000);
+                                    totalBelanja = totalBelanja - (jumlahBeli[2] * harga[2]);
+                                    jumlahBeli[2] = input.nextInt();
+                                    totalBelanja = totalBelanja + (jumlahBeli[2] * harga[2]);
                                     System.out.println();
                                     System.out.println("Data berhasil diubah !");
                                     System.out.println();
-                                    System.out.println("Roti : " + roti);
+                                    System.out.println(menu[2][0]+" : " + jumlahBeli[2]);
                                     System.out.println();
                                 }
 
@@ -177,15 +187,19 @@ public class backup {
                             System.out.println("========================================================");
                             System.out.println("|     Pesanan          |     Jumlah    |    Sub Total   |");
                             System.out.println("========================================================");
-                            if (kopi != 0) {
-                                System.out.println("|     Kopi             |       "+kopi+"       |    "+kopi *10000+"   |");
+
+                            for(int i=0; i<menu.length; i++){
+                                if (jumlahBeli[i] != 0) {
+                                    System.out.println("|     "+menu[i][0]+"             |       "+jumlahBeli[i]+"       |    "+jumlahBeli[i] *harga[i]+"   |");
+                                }
+
                             }
-                            if (teh != 0) {
-                                System.out.println("|     Teh              |       "+teh+"       |    "+teh *8000+"   |");
-                            }
-                            if (roti != 0) {
-                                System.out.println("|     Roti             |       "+roti+"       |    "+roti *5000+"   |");
-                            }
+                            // if (teh != 0) {
+                            //     System.out.println("|     "+menu[1][1]+"              |       "+jumlahBeli[1]+"       |    "+jumlahBeli[1] *8000+"   |");
+                            // }
+                            // if (roti != 0) {
+                            //     System.out.println("|     "+menu[2][1]+"             |       "+jumlahBeli[2]+"       |    "+jumlahBeli[2] *5000+"   |");
+                            // }
                             System.out.println("--------------------------------------------------------");
                             System.out.println("|     Total                             |   "+totalBelanja+"    |");
                             System.out.println("|     Bayar                             |   "+jumlahUang+"    |");
