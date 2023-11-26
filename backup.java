@@ -127,21 +127,24 @@ public class backup {
                             System.out.println("|     Pesanan          |     Jumlah    |    Sub Total   |");
                             System.out.println("========================================================");
                             if (kopi != 0) {
-                                System.out.println("|     Kopi             |       "+kopi+"       |    "+kopi *10000+"   |");
+                                System.out.println("|     Kopi             |       " + kopi + "       |    "
+                                        + kopi * 10000 + "   |");
                             }
                             if (teh != 0) {
-                                System.out.println("|     Teh              |       "+teh+"       |    "+teh *8000+"   |");
+                                System.out.println(
+                                        "|     Teh              |       " + teh + "       |    " + teh * 8000 + "   |");
                             }
                             if (roti != 0) {
-                                System.out.println("|     Roti             |       "+roti+"       |    "+roti *5000+"   |");
+                                System.out.println("|     Roti             |       " + roti + "       |    "
+                                        + roti * 5000 + "   |");
                             }
                             System.out.println("--------------------------------------------------------");
-                            System.out.println("|     Total                             |   "+totalBelanja+"    |");
-                            System.out.println("|     Bayar                             |   "+jumlahUang+"    |");
+                            System.out.println("|     Total                             |   " + totalBelanja + "    |");
+                            System.out.println("|     Bayar                             |   " + jumlahUang + "    |");
                             System.out.println("|                                                      |");
-                            System.out.println("|     Kembalian                         |   "+kembalian+"    |");
+                            System.out.println("|     Kembalian                         |   " + kembalian + "    |");
                             System.out.println("========================================================");
-                           
+
                             System.out.println();
                         } else {
                             System.out.println();
