@@ -9,6 +9,31 @@ public class remain {
     static int pilihan, kopi = 0, teh = 0, roti = 0, harga[] = { 10000, 8000, 5000 };
     static int jumlahBeli[] = { 0, 0, 0 };
 
+    public static void main(String[] args) {
+        System.out.println("=============================");
+        System.out.println("| Selamat datang di Cafe JTI |");
+        System.out.println("=============================");
+        while (true) {
+            System.out.println("");
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            System.out.println();
+            System.out.print("Pilih salah satu (1/2) : ");
+            pilihan = input.nextInt();
+            System.out.println();
+
+            switch (pilihan) {
+                case 1:
+                    login();
+                    break;
+                case 2:
+                    return;
+                default:
+                    System.out.println("\nPilihan anda tidak tersedia.");
+            }
+        }
+    }
+
     static void login() {
         System.out.println("====================================================");
         System.out.println();
@@ -170,9 +195,9 @@ public class remain {
         jumlahUang = input.nextDouble();
 
         if (jumlahUang >= totalBelanja) {
-            
+
             kembalian = kembalian(jumlahUang, totalBelanja);
-            
+
             System.out.println();
             System.out.println("====================================================");
             System.out.println();
@@ -193,7 +218,7 @@ public class remain {
                 }
 
             }
-            
+
             System.out.println("--------------------------------------------------------");
             System.out.println("|     Total                             |   " + totalBelanja + "    |");
             System.out.println("|     Bayar                             |   " + jumlahUang + "    |");
@@ -214,33 +239,9 @@ public class remain {
         }
     }
 
-    static double kembalian(double jumlah, double bayar){
+    static double kembalian(double jumlah, double bayar) {
         double result = jumlah - bayar;
         return result;
     }
 
-    public static void main(String[] args) {
-        System.out.println("=============================");
-        System.out.println("| Selamat datang di Cafe JTI |");
-        System.out.println("=============================");
-        while (true) {
-            System.out.println("");
-            System.out.println("1. Login");
-            System.out.println("2. Exit");
-            System.out.println();
-            System.out.print("Pilih salah satu (1/2) : ");
-            pilihan = input.nextInt();
-            System.out.println();
-
-            switch (pilihan) {
-                case 1:
-                    login();
-                    break;
-                case 2:
-                    return;
-                default:
-                    System.out.println("\nPilihan anda tidak tersedia.");
-            }
-        }
-    }
 }
