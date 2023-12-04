@@ -30,6 +30,7 @@ public class main {
     }
 
     static void login() {
+
         System.out.println("\n====================================================");
         System.out.println("\n========\n| LOGIN |\n========");
         input.nextLine();
@@ -69,12 +70,16 @@ public class main {
     }
 
     static void displayMenu() {
+        String menu[][] = {{"Kopi", "10000"}, {"Teh", "8000"}, {"Roti", "5000"}};
+
         System.out.println("\n==============================================");
         System.out.println("|  No  |   Makanan & Minuman   |     Harga    |");
         System.out.println("==============================================");
-        System.out.println("|  1.  |   Kopi                |   Rp 10,000  |");
-        System.out.println("|  2.  |   Teh                 |   Rp  8,000  |");
-        System.out.println("|  3.  |   Roti                |   Rp  5,000  |");
+
+        for (int i=0; i<menu.length; i++){
+            System.out.println("|  "+(i+1)+".  |   "+ menu[i][0]+"                |   Rp "+menu[i][1]+"  |");
+        }
+       
         System.out.println("==============================================");
         System.out.println("\nKetik 4 jika proses pemesanan sudah selesai.");
         if (roti != 0 || kopi != 0 || teh != 0) {
@@ -119,13 +124,14 @@ public class main {
 
     static void modifyOrder() {
         System.out.println("\nPilih menu yang ingin anda ubah.");
-        System.out.println("\n1. Roti : " + roti);
-        System.out.println("2. Kopi : " + kopi);
-        System.out.println("3. Teh : " + teh);
+        System.out.println("\n1. Kopi : " + kopi);
+        System.out.println("2. Teh : " + teh);
+        System.out.println("3. Roti : " + roti);
         System.out.print("\nPilih salah satu (1/2/3): ");
         int pilihan = input.nextInt();
 
         if (pilihan >= 1 && pilihan <= 3) {
+            
             System.out.print("\nMasukkan jumlah terbaru:");
             updateQuantity(pilihan, input.nextInt());
             System.out.println("\nData berhasil diubah !");
@@ -151,11 +157,11 @@ public class main {
     static String getMenuName(int menuItem) {
         switch (menuItem) {
             case 1:
-                return "Roti";
-            case 2:
                 return "Kopi";
-            case 3:
+            case 2:
                 return "Teh";
+            case 3:
+                return "Roti";
             default:
                 return "";
         }
@@ -165,6 +171,7 @@ public class main {
         switch (menuItem) {
             case 1:
                 kopi = newQuantity;
+
                 break;
             case 2:
                 teh = newQuantity;
@@ -186,7 +193,36 @@ public class main {
                 double jumlahUang = input.nextDouble();
                 if (jumlahUang >= totalBelanja) {
                     double kembalian = jumlahUang - totalBelanja;
-                    displayReceipt();
+
+                    System.out.println("\n====================================================");
+                    System.out.println("\nPembayaran Berhasil !");
+
+                    System.out.println("Kembalian Anda: Rp " + kembalian);
+                    System.out.println("\n========================================================");
+                    System.out.println("|                        Kafe JTI                       |");
+                    System.out.println("========================================================");
+                    System.out.println("|     Pesanan          |     Jumlah    |    Sub Total   |");
+                    System.out.println("========================================================");
+                    if (kopi != 0) {
+                        System.out.println("|     Kopi             |       " + kopi + "       |    "
+                                + kopi * 10000 + "   |");
+                    }
+                    if (teh != 0) {
+                        System.out.println(
+                                "|     Teh              |       " + teh + "       |    " + teh * 8000 + "   |");
+                    }
+                    if (roti != 0) {
+                        System.out.println("|     Roti             |       " + roti + "       |    "
+                                + roti * 5000 + "   |");
+                    }
+                    System.out.println("--------------------------------------------------------");
+                    System.out.println("|     Total                             |   " + totalBelanja + "    |");
+                    System.out.println("|     Bayar                             |   " + jumlahUang + "    |");
+                    System.out.println("|                                                      |");
+                    System.out.println("|     Kembalian                         |   " + kembalian + "    |");
+                    System.out.println("========================================================");
+                    System.out.println();
+
                     break;
                 } else {
                     System.out.println("\n====================================================");
@@ -200,51 +236,4 @@ public class main {
             }
         }
     }
-
-    static void displayReceipt() {
-        System.out.println("\n====================================================");
-        System.out.println("\nPembayaran Berhasil !");
-        
-        double jumlahUang;
-        while (true) {
-            System.out.print("\nTerima kasih! Masukkan jumlah uang yang diberikan: Rp ");
-            if (input.hasNextDouble()) {
-                jumlahUang = input.nextDouble();
-                break;
-            } else {
-                System.out.println("Masukkan harus berupa angka. Silakan coba lagi.");
-                input.nextLine(); 
-            }
-        }
-    
-        double kembalian = jumlahUang - totalBelanja;
-    
-        System.out.println("Kembalian Anda: Rp " + kembalian);
-        System.out.println("\n========================================================");
-        System.out.println("|                        Kafe JTI                       |");
-        System.out.println("========================================================");
-        System.out.println("|     Pesanan          |     Jumlah    |    Sub Total   |");
-        System.out.println("========================================================");
-        if (kopi != 0) {
-            System.out.println("|     Kopi             |       " + kopi + "       |    "
-                    + kopi * 10000 + "   |");
-        }
-        if (teh != 0) {
-            System.out.println(
-                    "|     Teh              |       " + teh + "       |    " + teh * 8000 + "   |");
-        }
-        if (roti != 0) {
-            System.out.println("|     Roti             |       " + roti + "       |    "
-                    + roti * 5000 + "   |");
-        }
-        System.out.println("--------------------------------------------------------");
-        System.out.println("|     Total                             |   " + totalBelanja + "    |");
-        System.out.println("|     Bayar                             |   " + jumlahUang + "    |");
-        System.out.println("|                                                      |");
-        System.out.println("|     Kembalian                         |   " + kembalian + "    |");
-        System.out.println("========================================================");
-        System.out.println();
-    }
-    
-    
 }
