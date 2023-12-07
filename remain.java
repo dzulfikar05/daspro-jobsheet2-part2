@@ -133,7 +133,14 @@ public class remain {
         } else if (pilihan == 4) {
             return;
         } else if (pilihan == 5) {
-            System.out.println();
+            changePesanan();
+        } else {
+            System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
+        }
+    }
+
+    static void changePesanan() {
+         System.out.println();
             System.out.println("Pilih menu yang ingin anda ubah.");
             System.out.println();
             for (int i = 0; i < menu.length; i++) {
@@ -176,10 +183,6 @@ public class remain {
                 System.out.println(menu[2][0] + " : " + jumlahBeli[2]);
                 System.out.println();
             }
-
-        } else {
-            System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
-        }
     }
 
     static void transaction() {
