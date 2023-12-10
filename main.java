@@ -223,6 +223,30 @@ public class main {
         System.out.println("\t|\t\t\t\t\t\t\t\t\t\t\t|");
         System.out.println("\t|\tKembalian\t\t\t\t\t|\t" + kembalian + "\t\t\t|");
         System.out.println("\t=========================================================================================");
+        
+        System.out.println();
+        System.out.println();
+        pilihan = 0;
+        System.out.println("1. Pemesanan");
+        System.out.println("2. Exit");
+        System.out.print("Pilih salah satu (1/2): ");
+        pilihan = input.nextInt();
+
+         switch (pilihan) {
+            case 1:
+                totalBelanja = 0;
+                jumlahUang = 0;
+                kembalian = 0;
+                for(int i = 0; i<jumlahBeli.length; i++){
+                    jumlahBeli[i]=0;
+                }
+                processMenu();
+                break;
+            case 2:
+                return;
+            default:
+                System.out.println("\nPilihan anda tidak tersedia.");
+        }
     }
 
     static double kembalian(double jumlah, double bayar) {
