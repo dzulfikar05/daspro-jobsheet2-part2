@@ -49,12 +49,43 @@ public class remain {
 
         if (user[0].equals(username) && user[1].equals(password)) {
             System.out.println("\nLogin Berhasil !");
-            processMenu();
-            transaction();
+
+            listmenu();
+           
 
         } else {
             System.out.println();
             System.out.println("Login Gagal! Username atau Password Salah.");
+        }
+    }
+    static void listmenu(){
+        while (true) {
+             System.out.println();
+            System.out.println("==============");
+            System.out.println("| Pilih Menu |");
+            System.out.println("==============");
+            System.out.println();
+            System.out.println("1. Tambah Menu");
+            System.out.println("2. Transaksi");
+            System.out.println("3. Exit");
+            pilihan = 0;
+            System.out.print("Pilh salah satu (1/2/3): ");
+            pilihan = input.nextInt();
+            System.out.println();
+            
+            switch (pilihan) {
+                case 1:
+                    // login();
+                    // break;
+                case 2:
+                    processMenu();
+                    transaction();
+                case 3:
+                    return;
+                default:
+                    System.out.println("\nPilihan anda tidak tersedia.");
+            }
+
         }
     }
 
@@ -63,21 +94,19 @@ public class remain {
             System.out.println();
             System.out.println("====================================================");
             System.out.println();
-            System.out.println("=======");
-            System.out.println("| Menu |");
-            System.out.println("=======");
+            System.out.println("\t=======");
+            System.out.println("\t| Menu |");
+            System.out.println("\t=======");
             System.out.println();
-            System.out.println("==============================================");
-            System.out.println("|  No  |   Makanan & Minuman   |     Harga    |");
-            System.out.println("==============================================");
-
+            System.out.println("\t=========================================================================");
+            System.out.println("\t|\tNo\t|\tMakanan & Minuman\t|\tHarga\t\t|");
+            System.out.println("\t=========================================================================");
+            
             for (int i = 0; i < menu.length; i++) {
-
-                System.out.println(
-                        "|  " + (i + 1) + ".  |   " + menu[i][0] + "                |   Rp " + menu[i][1] + "  |");
+                System.out.println("\t|\t" + (i + 1) + ".\t|\t" + menu[i][0] + "\t\t\t|\tRp " + menu[i][1] + "\t\t|");
             }
-
-            System.out.println("==============================================");
+            
+            System.out.println("\t=========================================================================");
             System.out.println();
             System.out.println("Ketik 4 jika proses pemesanan sudah selesai.");
 
@@ -164,39 +193,6 @@ public class remain {
                 System.out.println();
             }
         }
-
-        // if (pilihan == 1) {
-        // System.out.print("Masukkan jumlah terbaru:");
-        // totalBelanja = totalBelanja - (jumlahBeli[0] * harga[0]);
-        // jumlahBeli[0] = input.nextInt();
-        // System.out.println();
-        // totalBelanja = totalBelanja + (jumlahBeli[0] * harga[0]);
-        // System.out.println("Data berhasil diubah !");
-        // System.out.println();
-        // System.out.println(menu[0][0] + " : " + jumlahBeli[0]);
-        // System.out.println();
-        // } else if (pilihan == 2) {
-        // System.out.print("Masukkan jumlah terbaru :");
-        // totalBelanja = totalBelanja - (jumlahBeli[1] * harga[1]);
-        // jumlahBeli[1] = input.nextInt();
-        // totalBelanja = totalBelanja + (jumlahBeli[1] * harga[1]);
-        // System.out.println();
-        // System.out.println("Data berhasil diubah !");
-        // System.out.println();
-        // System.out.println(menu[1][0] + " : " + jumlahBeli[1]);
-        // System.out.println();
-        // } else if (pilihan == 3) {
-        // System.out.println();
-        // System.out.print("Masukkan jumlah terbaru:");
-        // totalBelanja = totalBelanja - (jumlahBeli[2] * harga[2]);
-        // jumlahBeli[2] = input.nextInt();
-        // totalBelanja = totalBelanja + (jumlahBeli[2] * harga[2]);
-        // System.out.println();
-        // System.out.println("Data berhasil diubah !");
-        // System.out.println();
-        // System.out.println(menu[2][0] + " : " + jumlahBeli[2]);
-        // System.out.println();
-        // }
     }
 
     static void transaction() {
@@ -239,26 +235,25 @@ public class remain {
 
     static void cetakNota() {
 
-        System.out.println("========================================================");
-        System.out.println("|                        Kafe JTI                       |");
-        System.out.println("========================================================");
-        System.out.println("|     Pesanan          |     Jumlah    |    Sub Total   |");
-        System.out.println("========================================================");
+      
+        System.out.println("\t=========================================================================================");
+        System.out.println("\t|\t\t\t\t\tKafe JTI\t\t\t\t\t|");
+        System.out.println("\t=========================================================================================");
+        System.out.println("\t|\tPesanan\t\t|\t\tJumlah\t\t|\tSub Total\t\t|");
+        System.out.println("\t=========================================================================================");
 
         for (int i = 0; i < menu.length; i++) {
             if (jumlahBeli[i] != 0) {
-                System.out.println("|     " + menu[i][0] + "             |       " + jumlahBeli[i] + "       |    "
-                        + jumlahBeli[i] * harga[i] + "   |");
+                System.out.println("\t|\t" + menu[i][0] + "\t\t|\t\t" + jumlahBeli[i] + "\t\t|\t" + jumlahBeli[i] * harga[i] + "\t\t\t|");
             }
-
         }
 
-        System.out.println("--------------------------------------------------------");
-        System.out.println("|     Total                             |   " + totalBelanja + "    |");
-        System.out.println("|     Bayar                             |   " + jumlahUang + "    |");
-        System.out.println("|                                                      |");
-        System.out.println("|     Kembalian                         |   " + kembalian + "    |");
-        System.out.println("========================================================");
+        System.out.println("\t-----------------------------------------------------------------------------------------");
+        System.out.println("\t|\tTotal\t\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
+        System.out.println("\t|\tBayar\t\t\t\t\t\t|\t" + jumlahUang + "\t\t\t|");
+        System.out.println("\t|\t\t\t\t\t\t\t\t\t\t\t|");
+        System.out.println("\t|\tKembalian\t\t\t\t\t|\t" + kembalian + "\t\t\t|");
+        System.out.println("\t=========================================================================================");
     }
 
     static double kembalian(double jumlah, double bayar) {
