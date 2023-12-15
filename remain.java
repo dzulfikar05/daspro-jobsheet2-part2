@@ -3,11 +3,12 @@ import java.util.Scanner;
 public class remain {
     static Scanner input = new Scanner(System.in);
     static String user[] = { "kasir", "kasir" };
-    static String username, password;
+    static String username, password, anoString;
     static double jumlahUang, kembalian, totalBelanja = 0;
-    static String menu[][] = { { "Kopi", "10000" }, { "Teh", "8000" }, { "Roti", "5000" } };
-    static int pilihan, kopi = 0, teh = 0, roti = 0, harga[] = { 10000, 8000, 5000 };
-    static int jumlahBeli[] = { 0, 0, 0 };
+    // static String menu[][] = { { "Kopi", "10000" }, { "Teh", "8000" }, { "Roti", "5000" } };
+    static int pilihan;
+    // static int jumlahBeli[] = { 0, 0, 0 };
+    static String[][] menuKafe;
 
     public static void main(String[] args) {
         System.out.println("=============================");
@@ -59,6 +60,7 @@ public class remain {
     }
 
     static void listmenu() {
+
         while (true) {
             System.out.println();
             System.out.println("==============");
@@ -66,23 +68,26 @@ public class remain {
             System.out.println("==============");
             System.out.println();
             System.out.println("1. Tambah Menu");
-            System.out.println("2. Transaksi");
-            System.out.println("3. Exit");
+            System.out.println("2. Lihat Menu");
+            System.out.println("3. Transaksi");
+            System.out.println("4. Exit");
             pilihan = 0;
-            System.out.print("Pilh salah satu (1/2/3): ");
+            System.out.print("Pilh salah satu (1/2/3/4): ");
             pilihan = input.nextInt();
             System.out.println();
 
             switch (pilihan) {
                 case 1:
                     inputMenu();
-                    // login();
-                    // break;
+                    break;
                 case 2:
+                    lihatMenu();
+                    break;
+                case 3:
                     processMenu();
                     transaction();
                     break;
-                case 3:
+                case 4:
                     return;
                 default:
                     System.out.println("\nPilihan anda tidak tersedia.");
@@ -96,7 +101,7 @@ public class remain {
         System.out.print("Masukkan jumlah menu yang ingin ditambahkan :");
         jumlahMenu = input.nextInt();
 
-        String menuKafe[][] = new String[jumlahMenu][2];
+        menuKafe = new String[jumlahMenu][4];
 
         for (int i = 0; i < menuKafe.length; i++) {
             System.out.println();
@@ -104,13 +109,39 @@ public class remain {
 
             System.out.print("Masukkan nama menu : ");
             menuKafe[i][0] = input.next();
-            System.out.print("Masukkan harga menu : ");
+            System.out.print("Masukkan stok menu : ");
             menuKafe[i][1] = input.next();
+            System.out.print("Masukkan harga menu : ");
+            menuKafe[i][2] = input.next();
             System.out.println();
-           
+
         }
+    }
 
+    static void lihatMenu() {
+        if (menuKafe.length < 1) {
+            System.out.println("Data belum tersedia. Silahkan mengisi data menu terbelih dahulu.");
+        } else {
+            while (true) {
+                System.out.println();
+                System.out.println("========================================================================================");
+                System.out.println("|\tNo\t|\tMakanan & Minuman\t|\tStok\t|\tHarga\t\t|");
+                System.out.println("========================================================================================");
 
+                for (int i = 0; i < menuKafe.length; i++) {
+                    System.out.println("|\t" + (i + 1) + ".\t|\t" + menuKafe[i][0] + "\t\t\t|\t"+menuKafe[i][1]+"\t|\tRp " + menuKafe[i][2] + "\t\t|");
+                }
+
+                System.out.println("========================================================================================");
+
+                anoString = "";
+                System.out.print("Apakah anda ingin kembali (y/n) ? ");
+                anoString = input.next();
+                if (anoString.equalsIgnoreCase("y")) {
+                    break;
+                }
+            }
+        }
     }
 
     static void processMenu() {
@@ -118,31 +149,38 @@ public class remain {
             System.out.println();
             System.out.println("====================================================");
             System.out.println();
-            System.out.println("\t=======");
-            System.out.println("\t| Menu |");
-            System.out.println("\t=======");
+            System.out.println("=======");
+            System.out.println("| Menu |");
+            System.out.println("=======");
             System.out.println();
-            System.out.println("\t=========================================================================");
-            System.out.println("\t|\tNo\t|\tMakanan & Minuman\t|\tHarga\t\t|");
-            System.out.println("\t=========================================================================");
+            System.out.println("========================================================================================");
+            System.out.println("|\tNo\t|\tMakanan & Minuman\t|\tStok\t|\tHarga\t\t|");
+            System.out.println("========================================================================================");
 
-            for (int i = 0; i < menu.length; i++) {
-                System.out.println("\t|\t" + (i + 1) + ".\t|\t" + menu[i][0] + "\t\t\t|\tRp " + menu[i][1] + "\t\t|");
+            for (int i = 0; i < menuKafe.length; i++) {
+                System.out.println("|\t" + (i + 1) + ".\t|\t" + menuKafe[i][0] + "\t\t\t|\t"+menuKafe[i][1]+"\t|\tRp " + menuKafe[i][2] + "\t\t|");
             }
 
-            System.out.println("\t=========================================================================");
+            System.out.println("========================================================================================");
             System.out.println();
-            System.out.println("Ketik 4 jika proses pemesanan sudah selesai.");
+            System.out.println("Ketik "+ (menuKafe.length+1) +" jika proses pemesanan sudah selesai.");
 
-            if (jumlahBeli[0] != 0 || jumlahBeli[1] != 0 || jumlahBeli[2] != 0) {
-                System.out.println("Ketik 5 jika ingin mengubah jumlah pesanan.");
+            boolean pesanan = false;
+            for(int i =0; i < menuKafe.length; i++){
+                if(menuKafe[i][3] != null){
+                    pesanan = true;
+                }
+            }
+
+            if (pesanan) {
+                System.out.println("Ketik "+(menuKafe.length+2)+" jika ingin mengubah jumlah pesanan.");
                 System.out.println();
                 System.out.println("Pesanan");
             }
 
-            for (int i = 0; i < menu.length; i++) {
-                if (jumlahBeli[i] != 0) {
-                    System.out.println(menu[i][0] + " : " + jumlahBeli[i]);
+            for (int i = 0; i < menuKafe.length; i++) {
+                if (menuKafe[i][3] != null) {
+                    System.out.println(menuKafe[i][0] + " : " + menuKafe[i][3]);
                 }
             }
 
@@ -151,9 +189,11 @@ public class remain {
                 System.out.println("Total belanja Anda: Rp " + totalBelanja);
             }
             System.out.println();
-            System.out.print("Pilih menu (1/2/3/4/5): ");
+            
+            System.out.print("Pilih menu sesuai nomor list menu: ");
+
             pilihan = input.nextInt();
-            if (pilihan == 4) {
+            if (pilihan == (menuKafe.length+1)) {
                 break;
             }
             storeInputMenu();
@@ -164,59 +204,80 @@ public class remain {
 
     static void storeInputMenu() {
         System.out.println();
+        for(int i = 0; i<menuKafe.length; i++){
+            if(pilihan == (i+1)){
+                int stokLama = Integer.valueOf(menuKafe[i][1]);
+                int jumlah; 
+                while (true) {
+                    System.out.print("Masukkan jumlah yang dipesan :");
+                    jumlah = input.nextInt();
+                    // detect stok
+                    if(stokLama <= jumlah){
+                        System.out.println("Stok tidak mencukupi.");
+                        System.out.println();
+                    }else{
+                        break;
+                    }
+                }
 
-        if (pilihan == 1) {
-            System.out.print("Masukkan jumlah yang dipesan :");
-            jumlahBeli[0] += input.nextInt();
-            totalBelanja += jumlahBeli[0] * harga[0];
-            System.out.println();
+                // insert qty
+                int jumlahLama = menuKafe[i][3] == null ? 0 : Integer.valueOf(menuKafe[i][3]);
+                menuKafe[i][3] =  String.valueOf(jumlahLama + jumlah); 
 
-        } else if (pilihan == 2) {
-            System.out.print("Masukkan jumlah yang dipesan :");
-            jumlahBeli[1] += input.nextInt();
-            totalBelanja += jumlahBeli[1] * harga[1];
-            System.out.println();
+                // set total
+                totalBelanja += Integer.valueOf(menuKafe[i][2]) * Integer.valueOf(menuKafe[i][3]);
 
-        } else if (pilihan == 3) {
-            System.out.print("Masukkan jumlah yang dipesan :");
-            jumlahBeli[2] += input.nextInt();
-            totalBelanja += jumlahBeli[2] * harga[2];
-            System.out.println();
+                // stock min
+                menuKafe[i][1] = String.valueOf(stokLama-jumlah);
 
-        } else if (pilihan == 4) {
-            return;
-        } else if (pilihan == 5) {
-            changePesanan();
-        } else {
-            System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
+
+            }else if(pilihan == (menuKafe.length+1)){
+                return;
+            }else if(pilihan == (menuKafe.length+2)){
+                changePesanan();
+            }
         }
+        // if(pilihan != (menuKafe.length+1) || pilihan != (menuKafe.length+2)){
+            // System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
+        // }
     }
 
     static void changePesanan() {
         System.out.println();
         System.out.println("Pilih menu yang ingin anda ubah.");
         System.out.println();
-        for (int i = 0; i < menu.length; i++) {
-            System.out.println((i + 1) + ". " + menu[i][0] + " : " + jumlahBeli[i]);
-
-        }
+        showPesanan();
         System.out.println();
-        System.out.println("Pilih salah satu (1/2/3): ");
+        System.out.println("Pilih salah satu dengan mengetikkan kode dari menu yang dipesan : ");
         pilihan = input.nextInt();
 
-        for (int i = 0; i < menu.length; i++) {
-            if (pilihan == (i + 1)) {
-                System.out.print("Masukkan jumlah terbaru:");
-                totalBelanja = totalBelanja - (jumlahBeli[i] * harga[i]);
-                jumlahBeli[i] = input.nextInt();
-                System.out.println();
-                totalBelanja = totalBelanja + (jumlahBeli[i] * harga[i]);
-                System.out.println("Data berhasil diubah !");
-                System.out.println();
-                System.out.println(menu[i][i] + " : " + jumlahBeli[i]);
-                System.out.println();
+        totalBelanja -= Integer.valueOf(menuKafe[pilihan][2]) * Integer.valueOf(menuKafe[pilihan][3]);
+        menuKafe[pilihan][1] = String.valueOf(Integer.valueOf(menuKafe[pilihan][1])+Integer.valueOf(menuKafe[pilihan][3]));
+
+        // input new qty & change data
+        System.out.print("Masukkan jumlah terbaru:");
+        menuKafe[pilihan][3] = String.valueOf(input.nextInt());
+        menuKafe[pilihan][1] = String.valueOf(Integer.valueOf(menuKafe[pilihan][1])-Integer.valueOf(menuKafe[pilihan][3]));
+        
+        // change total
+        totalBelanja += Integer.valueOf(menuKafe[pilihan][2]) * Integer.valueOf(menuKafe[pilihan][3]);
+
+        System.out.println("Data berhasil diubah !");
+        showPesanan();
+     
+    }
+
+    static void showPesanan(){
+        System.out.println("=================================================================");
+        System.out.println("|\tNo\t|\tItem\t|\tJumlah\t|\tKode\t|");
+        System.out.println("=================================================================");
+        for (int i = 0; i < menuKafe.length; i++) {
+            if(menuKafe[i][3] != null){
+
+                System.out.println("|\t"+(i+1)+"\t|\t"+menuKafe[i][0]+"\t|\t" + menuKafe[i][3]+"\t|\t"+i+"\t|");
             }
         }
+        System.out.println("=================================================================");
     }
 
     static void transaction() {
@@ -242,8 +303,15 @@ public class remain {
             System.out.println("Terima kasih! Kembalian Anda: Rp " + kembalian);
             System.out.println();
 
-            cetakNota();
-
+            anoString = "";
+            System.out.print("Cetak Nota (y/n) ? ");
+            anoString = input.next();
+            if(anoString.equalsIgnoreCase("y")){
+                cetakNota();
+                listAfterNota();
+            }else{
+                listAfterNota();
+            }
             System.out.println();
         } else {
             System.out.println();
@@ -258,31 +326,60 @@ public class remain {
     }
 
     static void cetakNota() {
-
-        System.out
-                .println("\t=========================================================================================");
+        System.out.println();
+        System.out.println("\t=========================================================================================");
         System.out.println("\t|\t\t\t\t\tKafe JTI\t\t\t\t\t|");
-        System.out
-                .println("\t=========================================================================================");
+        System.out.println("\t=========================================================================================");
         System.out.println("\t|\tPesanan\t\t|\t\tJumlah\t\t|\tSub Total\t\t|");
-        System.out
-                .println("\t=========================================================================================");
+        System.out.println("\t=========================================================================================");
 
-        for (int i = 0; i < menu.length; i++) {
-            if (jumlahBeli[i] != 0) {
-                System.out.println("\t|\t" + menu[i][0] + "\t\t|\t\t" + jumlahBeli[i] + "\t\t|\t"
-                        + jumlahBeli[i] * harga[i] + "\t\t\t|");
+        for (int i = 0; i < menuKafe.length; i++) {
+            if (menuKafe[i][3] != null) {
+                System.out.println("\t|\t" + menuKafe[i][0] + "\t\t|\t\t" + menuKafe[i][3] + "\t\t|\t"+ Integer.valueOf(menuKafe[i][3]) * Integer.valueOf(menuKafe[i][2]) + "\t\t\t|");
             }
         }
 
-        System.out
-                .println("\t-----------------------------------------------------------------------------------------");
+        System.out.println("\t-----------------------------------------------------------------------------------------");
         System.out.println("\t|\tTotal\t\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
         System.out.println("\t|\tBayar\t\t\t\t\t\t|\t" + jumlahUang + "\t\t\t|");
         System.out.println("\t|\t\t\t\t\t\t\t\t\t\t\t|");
         System.out.println("\t|\tKembalian\t\t\t\t\t|\t" + kembalian + "\t\t\t|");
-        System.out
-                .println("\t=========================================================================================");
+        System.out.println("\t=========================================================================================");
+        System.out.println();
+        System.out.println();
+
+    }
+
+    static void reset(){
+        totalBelanja = 0;
+        jumlahUang = 0;
+        kembalian = 0;
+        for(int i = 0; i<menuKafe.length; i++){
+            menuKafe[i][3]=null;
+        }
+    }
+
+    static void listAfterNota () {
+        pilihan = 0;
+        reset();
+        System.out.println("1. Menu");
+        System.out.println("2. Pemesanan");
+        System.out.println("3. Exit");
+        System.out.print("Pilih salah satu (1/2): ");
+
+        pilihan = input.nextInt();
+        switch (pilihan) {
+            case 1:
+                listmenu();
+                break;
+            case 2:
+                processMenu();
+                break;
+            case 3:
+                return;
+            default:
+                System.out.println("\nPilihan anda tidak tersedia.");
+        }
     }
 
     static double kembalian(double jumlah, double bayar) {
