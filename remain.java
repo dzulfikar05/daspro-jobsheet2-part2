@@ -1,13 +1,13 @@
 import java.util.Scanner;
-
+import java.util.Arrays;
 public class remain {
     static Scanner input = new Scanner(System.in);
-    static String user[] = { "kasir", "kasir" };
-    static String username, password, anoString;
-    static double jumlahUang, kembalian, totalBelanja = 0;
-    // static String menu[][] = { { "Kopi", "10000" }, { "Teh", "8000" }, { "Roti", "5000" } };
+    static String user[][] = { {"kasir", "kasir"}, {"super", "super"} };
+    static String bulan [] = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+    static String username, password, anoString, settingTanggal, day, month, year, session;
+    static double jumlahUang, kembalian, totalBelanja = 0, omsetHarian;
+    static String[][][][] omsetBulanan = new String[3000][12][31][2]; 
     static int pilihan;
-    // static int jumlahBeli[] = { 0, 0, 0 };
     static String[][] menuKafe;
 
     public static void main(String[] args) {
@@ -48,11 +48,14 @@ public class remain {
         System.out.print("Masukkan password anda :");
         password = input.nextLine();
 
-        if (user[0].equals(username) && user[1].equals(password)) {
+        if (user[0][0].equals(username) && user[0][1].equals(password)) {
             System.out.println("\nLogin Berhasil !");
-
+            session = "kasir";
             listmenu();
-
+        }else if (user[1][0].equals(username) && user[1][1].equals(password)) {
+            System.out.println("\nLogin Berhasil !");
+            session = "super";
+            listmenu();
         } else {
             System.out.println();
             System.out.println("Login Gagal! Username atau Password Salah.");
@@ -60,37 +63,154 @@ public class remain {
     }
 
     static void listmenu() {
+        boolean dateCon = false;
+        boolean menuCon = false;
+        while (true) {
+            if(session == "super"){
+                System.out.println();
+                System.out.println("==============");
+                System.out.println("| Pilih Menu |");
+                System.out.println("==============");
+                System.out.println();
+                System.out.println("1. Setting Tanggal");
+                System.out.println("2. Tambah Menu");
+                System.out.println("3. Lihat Menu");
+                System.out.println("4. Transaksi");
+                System.out.println("5. Lihat Omset");
+                System.out.println("6. Logout");
+                pilihan = 0;
+                System.out.print("Pilh salah satu (1/2/3/..): ");
+                pilihan = input.nextInt();
+                System.out.println();
 
+                switch (pilihan) {
+                    case 1: 
+                        settingTanggal();
+                        break;
+                    case 2:
+                        // menuCon = checkMenu();
+                        // if(menuCon){
+                            inputMenu();
+                        // }
+                        break;
+                    case 3:
+                        menuCon = checkMenu();
+                        if(menuCon){
+                            lihatMenu();
+                        }
+                        break;
+                    case 4:
+                        dateCon = checkSetDate();
+                        menuCon = checkMenu();
+
+                        if(dateCon && menuCon){
+                            processMenu();
+                            transaction();
+                        }
+                        break;
+                    case 5:
+                        omset();
+                    case 6:
+                        return;
+                    default:
+                        System.out.println("\nPilihan anda tidak tersedia.");
+                }
+            }else if (session == "kasir"){
+                System.out.println();
+                System.out.println("==============");
+                System.out.println("| Pilih Menu |");
+                System.out.println("==============");
+                System.out.println();
+                System.out.println("1. Setting Tanggal");
+                System.out.println("2. Tambah Menu");
+                System.out.println("3. Lihat Menu");
+                System.out.println("4. Transaksi");
+                // System.out.println("5. Lihat Omset");
+                System.out.println("5. Logout");
+                pilihan = 0;
+                System.out.print("Pilh salah satu (1/2/3/..): ");
+                pilihan = input.nextInt();
+                System.out.println();
+
+                switch (pilihan) {
+                    case 1: 
+                        settingTanggal();
+                        break;
+                    case 2:
+                        // menuCon = checkMenu();
+                        // if(menuCon){
+                            inputMenu();
+                        // }
+                        break;
+                    case 3:
+                        menuCon = checkMenu();
+                        if(menuCon){
+                            lihatMenu();
+                        }
+                        break;
+                    case 4:
+                        dateCon = checkSetDate();
+                        menuCon = checkMenu();
+
+                        if(dateCon && menuCon){
+                            processMenu();
+                            transaction();
+                        }
+                        break;
+                    // case 5:
+                    //     omset();
+                    case 5:
+                        return;
+                    default:
+                        System.out.println("\nPilihan anda tidak tersedia.");
+                }
+            }
+
+
+        }
+    }
+
+    static boolean checkSetDate(){
+        if(settingTanggal == null){
+            System.out.println("Tanggal System harus di isi terlebih dahulu. Anda dapat mengisi dengan memilih nomor 1 pada pemilihan menu.");
+            return false;
+        }
+        return true;
+    }
+
+    static boolean checkMenu(){
+        if(menuKafe == null){
+            System.out.println("Menu yang dijual pada system tidak tersedia, silahkan menambahkan menu dengan memilih nomor 2 pada pemilihan menu");
+
+            return false;
+        }
+        return true;
+    }
+
+    static void settingTanggal(){
+        // reset Date
+        settingTanggal = null;
+        day = null;
+        month = null;
+        year = null;
+
+        System.out.print("Masukkan tanggal setting tanggal sistem (dd/mm/yyyy): ");
+        settingTanggal = input.next();
+
+        String[] parts = settingTanggal.split("/");
+        day = parts[0]; // dd
+        month = parts[1]; // mm
+        year = parts[2]; // yyyy
+        
         while (true) {
             System.out.println();
-            System.out.println("==============");
-            System.out.println("| Pilih Menu |");
-            System.out.println("==============");
+            System.out.println("Tanggal : "+ settingTanggal);
             System.out.println();
-            System.out.println("1. Tambah Menu");
-            System.out.println("2. Lihat Menu");
-            System.out.println("3. Transaksi");
-            System.out.println("4. Exit");
-            pilihan = 0;
-            System.out.print("Pilh salah satu (1/2/3/4): ");
-            pilihan = input.nextInt();
-            System.out.println();
-
-            switch (pilihan) {
-                case 1:
-                    inputMenu();
-                    break;
-                case 2:
-                    lihatMenu();
-                    break;
-                case 3:
-                    processMenu();
-                    transaction();
-                    break;
-                case 4:
-                    return;
-                default:
-                    System.out.println("\nPilihan anda tidak tersedia.");
+            anoString = "";
+            System.out.print("Kembali (y/n) ? ");
+            anoString = input.next();
+            if(anoString.equalsIgnoreCase("y")){
+                break;
             }
 
         }
@@ -294,7 +414,17 @@ public class remain {
 
         if (jumlahUang >= totalBelanja) {
 
+            // insert omser
+            // omsetHarian += totalBelanja;
+            String oldCountTransaction = omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0]; 
+            String oldOmsetTransaction = omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1]; 
+            omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0] = String.valueOf(Integer.valueOf(oldCountTransaction == null ? "0" : oldCountTransaction)+1);
+            omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] = String.valueOf(Integer.valueOf(oldOmsetTransaction == null ? "0" : oldOmsetTransaction)+totalBelanja);
+
+            // count kembalian
             kembalian = kembalian(jumlahUang, totalBelanja);
+            
+            // status transaction 
             System.out.println();
             System.out.println("====================================================");
             System.out.println();
@@ -303,6 +433,7 @@ public class remain {
             System.out.println("Terima kasih! Kembalian Anda: Rp " + kembalian);
             System.out.println();
 
+            // validation cetak nota
             anoString = "";
             System.out.print("Cetak Nota (y/n) ? ");
             anoString = input.next();
@@ -327,24 +458,24 @@ public class remain {
 
     static void cetakNota() {
         System.out.println();
-        System.out.println("\t=========================================================================================");
-        System.out.println("\t|\t\t\t\t\tKafe JTI\t\t\t\t\t|");
-        System.out.println("\t=========================================================================================");
-        System.out.println("\t|\tPesanan\t\t|\t\tJumlah\t\t|\tSub Total\t\t|");
-        System.out.println("\t=========================================================================================");
+        System.out.println("=========================================================================================");
+        System.out.println("|\t\t\t\t\tKafe JTI\t\t\t\t\t|");
+        System.out.println("=========================================================================================");
+        System.out.println("|\tPesanan\t\t|\t\tJumlah\t\t|\tSub Total\t\t|");
+        System.out.println("=========================================================================================");
 
         for (int i = 0; i < menuKafe.length; i++) {
             if (menuKafe[i][3] != null) {
-                System.out.println("\t|\t" + menuKafe[i][0] + "\t\t|\t\t" + menuKafe[i][3] + "\t\t|\t"+ Integer.valueOf(menuKafe[i][3]) * Integer.valueOf(menuKafe[i][2]) + "\t\t\t|");
+                System.out.println("|\t" + menuKafe[i][0] + "\t\t|\t\t" + menuKafe[i][3] + "\t\t|\t"+ Integer.valueOf(menuKafe[i][3]) * Integer.valueOf(menuKafe[i][2]) + "\t\t\t|");
             }
         }
 
-        System.out.println("\t-----------------------------------------------------------------------------------------");
-        System.out.println("\t|\tTotal\t\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
-        System.out.println("\t|\tBayar\t\t\t\t\t\t|\t" + jumlahUang + "\t\t\t|");
-        System.out.println("\t|\t\t\t\t\t\t\t\t\t\t\t|");
-        System.out.println("\t|\tKembalian\t\t\t\t\t|\t" + kembalian + "\t\t\t|");
-        System.out.println("\t=========================================================================================");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println("|\tTotal\t\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
+        System.out.println("|\tBayar\t\t\t\t\t\t|\t" + jumlahUang + "\t\t\t|");
+        System.out.println("|\t\t\t\t\t\t\t\t\t\t\t|");
+        System.out.println("|\tKembalian\t\t\t\t\t|\t" + kembalian + "\t\t\t|");
+        System.out.println("=========================================================================================");
         System.out.println();
         System.out.println();
 
@@ -362,6 +493,7 @@ public class remain {
     static void listAfterNota () {
         pilihan = 0;
         reset();
+        System.out.println();
         System.out.println("1. Menu");
         System.out.println("2. Pemesanan");
         System.out.println("3. Exit");
@@ -387,4 +519,114 @@ public class remain {
         return result;
     }
 
+    static void omset(){
+        while (true) {
+            System.out.println("=============");
+            System.out.println("| Data Omset |");
+            System.out.println("=============");
+            System.out.println();
+            System.out.println("Jenis Omset");
+            System.out.println("1. Omset Harian");
+            System.out.println("2. Omset Bulanan");
+            System.out.println("3. Kembali");
+
+            pilihan = 0;
+            System.out.print("Pilih salah satu (1/2/3) : ");
+            pilihan = input.nextInt();
+
+            switch (pilihan) {
+                case 1:
+                    omsetHarian();
+                    break;
+                case 2:
+                    omsetBulanan();
+                    break;
+                case 3:
+                    listmenu();
+                    break;
+                default:
+                    System.out.println("\nPilihan anda tidak tersedia.");
+            }
+        }
+
+    }
+
+    static void omsetHarian(){
+        
+        // input date
+        String tanggal;
+        System.out.println();
+        System.out.print("Masukkan tanggal (dd/mm/yyyy) : ");
+        tanggal = input.next();
+
+        // split date
+        String[] parts = tanggal.split("/");
+        String dayF = parts[0]; // dd
+        String monthF = parts[1]; // mm
+        String yearF = parts[2]; // yyyy
+
+        // show data
+        while (true) {
+            System.out.println();
+            System.out.println("Data transaksi pada tanggal " + tanggal +" :");
+            System.out.println("Banyak Transaksi\t : "+ omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][0]);
+            System.out.println("Total Pendapatan\t : "+ omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][1]);
+            System.out.println();
+            anoString = "";
+            System.out.println("Kembali (y/n) : ");
+            anoString = input.next();
+            if (anoString.equalsIgnoreCase("y")) {
+                break;
+            }
+        }
+    }
+
+    static void omsetBulanan(){
+        String tanggal;
+        int countTransaction = 0;
+        double countIncome = 0;
+        // input date
+        System.out.println();
+        System.out.print("Masukkan tanggal (mm/yyyy) : ");
+        tanggal = input.next();
+
+        // split date
+        String[] parts = tanggal.split("/");
+        // String dayF = parts[0]; // dd
+        String monthF = parts[0]; // mm
+        String yearF = parts[1]; // yyyy
+
+        while (true) {
+            System.out.println("Transaksi Pada Bulan ke-"+ monthF+" ("+ bulan[Integer.valueOf(monthF)-1] +")");
+
+            for(int i = 0; i < omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1].length; i++){
+                if(omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] != null){
+                    countTransaction += 1;
+                    countIncome += Double.valueOf(omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][1]);
+                }
+            }
+
+            System.out.println("Jumlah total transaksi\t: "+ countTransaction);
+            System.out.println("Jumlah total pendapatan\t: "+ countIncome);
+            System.out.println("Detail Transaksi : ");
+            
+            System.out.println("=================================================================");
+            System.out.println("|\tTanggal\t\t|\tTransaksi\t|\tPendapatan\t|");
+            System.out.println("=================================================================");
+            for(int i = 0; i < omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1].length; i++){
+                if(omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] != null){
+                    System.out.println("|\t"+(i+1)+"/"+monthF+"/"+yearF+"\t|\t" + omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] + "\t|\t" + omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][1]+"\t|");
+                }
+            }
+            System.out.println("=================================================================");
+
+
+            anoString = "";
+            System.out.println("Kembali (y/n) : ");
+            anoString = input.next();
+            if (anoString.equalsIgnoreCase("y")) {
+                break;
+            }
+        }
+    }
 }
