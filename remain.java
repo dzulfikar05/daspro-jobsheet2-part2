@@ -543,7 +543,7 @@ public class remain {
                     omsetHarian();
                     break;
                 case 2:
-                    omsetPenjualan();
+                    omsetBulanan();
                     break;
                 case 3:
                     listmenu();
@@ -589,7 +589,7 @@ public class remain {
         }
     }
 
-    static void omsetPenjualan(){
+    static void omsetBulanan(){
         String tanggal;
         int countTransaction = 0;
         double countIncome = 0;
