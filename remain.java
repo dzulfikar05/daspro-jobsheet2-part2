@@ -5,8 +5,8 @@ public class remain {
     static String user[][] = { {"kasir", "kasir"}, {"super", "super"} };
     static String bulan [] = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
     static String username, password, anoString, settingTanggal, day, month, year, session;
-    static double jumlahUang, kembalian, totalBelanja = 0, omsetHarian;
-    static String[][][][] omsetBulanan = new String[3000][12][31][2]; 
+    static double jumlahUang, kembalian, totalBelanja = 0;
+    static String[][][][] omsetPenjualan = new String[3000][12][31][2]; /* tahun|bulan|tanggal|countTransaksi - countIncome */
     static int pilihan;
     static String[][] menuKafe;
 
@@ -310,12 +310,13 @@ public class remain {
             }
             System.out.println();
             
+            pilihan = 0;
             System.out.print("Pilih menu sesuai nomor list menu: ");
 
             pilihan = input.nextInt();
-            if (pilihan == (menuKafe.length+1)) {
-                break;
-            }
+            // if (pilihan == (menuKafe.length+1)) {
+            //     break;
+            // }
             storeInputMenu();
             System.out.println();
         }
@@ -323,9 +324,11 @@ public class remain {
     }
 
     static void storeInputMenu() {
+        boolean checkPil = false;
         System.out.println();
         for(int i = 0; i<menuKafe.length; i++){
             if(pilihan == (i+1)){
+                checkPil = true;
                 int stokLama = Integer.valueOf(menuKafe[i][1]);
                 int jumlah; 
                 while (true) {
@@ -352,14 +355,14 @@ public class remain {
 
 
             }else if(pilihan == (menuKafe.length+1)){
-                return;
+                transaction();
             }else if(pilihan == (menuKafe.length+2)){
                 changePesanan();
             }
         }
-        // if(pilihan != (menuKafe.length+1) || pilihan != (menuKafe.length+2)){
-            // System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
-        // }
+        if(checkPil == false || pilihan != (menuKafe.length+1) || pilihan != (menuKafe.length+2)){
+            System.out.println("Pilihan tidak valid. Silakan pilih menu yang tersedia.");
+        }
     }
 
     static void changePesanan() {
@@ -368,14 +371,14 @@ public class remain {
         System.out.println();
         showPesanan();
         System.out.println();
-        System.out.println("Pilih salah satu dengan mengetikkan kode dari menu yang dipesan : ");
+        System.out.print("Pilih salah satu dengan mengetikkan kode dari menu yang dipesan : ");
         pilihan = input.nextInt();
 
         totalBelanja -= Integer.valueOf(menuKafe[pilihan][2]) * Integer.valueOf(menuKafe[pilihan][3]);
         menuKafe[pilihan][1] = String.valueOf(Integer.valueOf(menuKafe[pilihan][1])+Integer.valueOf(menuKafe[pilihan][3]));
 
         // input new qty & change data
-        System.out.print("Masukkan jumlah terbaru:");
+        System.out.print("Masukkan jumlah terbaru : ");
         menuKafe[pilihan][3] = String.valueOf(input.nextInt());
         menuKafe[pilihan][1] = String.valueOf(Integer.valueOf(menuKafe[pilihan][1])-Integer.valueOf(menuKafe[pilihan][3]));
         
@@ -416,10 +419,11 @@ public class remain {
 
             // insert omser
             // omsetHarian += totalBelanja;
-            String oldCountTransaction = omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0]; 
-            String oldOmsetTransaction = omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1]; 
-            omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0] = String.valueOf(Integer.valueOf(oldCountTransaction == null ? "0" : oldCountTransaction)+1);
-            omsetBulanan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] = String.valueOf(Integer.valueOf(oldOmsetTransaction == null ? "0" : oldOmsetTransaction)+totalBelanja);
+            String oldCountTransaction = omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0] ==  null ? "0" : omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0]; 
+            String oldOmsetTransaction = omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] == null ? "0" : omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1]; 
+            omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0] = String.valueOf(Integer.valueOf(oldCountTransaction)+1);
+            omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] = String.valueOf(Double.valueOf(oldOmsetTransaction)+totalBelanja);
+            // omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] = String.valueOf(Integer.valueOf(oldOmsetTransaction == null ? "0" : oldOmsetTransaction)+totalBelanja);
 
             // count kembalian
             kembalian = kembalian(jumlahUang, totalBelanja);
@@ -539,7 +543,7 @@ public class remain {
                     omsetHarian();
                     break;
                 case 2:
-                    omsetBulanan();
+                    omsetPenjualan();
                     break;
                 case 3:
                     listmenu();
@@ -569,8 +573,12 @@ public class remain {
         while (true) {
             System.out.println();
             System.out.println("Data transaksi pada tanggal " + tanggal +" :");
-            System.out.println("Banyak Transaksi\t : "+ omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][0]);
-            System.out.println("Total Pendapatan\t : "+ omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][1]);
+            // System.out.println(omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][0] != null ? "Banyak Transaksi\t : "+  omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][0] : "Banyak Transaksi\t : -");
+            // System.out.println(omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][1] != null ? "Total Pendapatan\t : "+  omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][1] : "Total Pendapatan\t : -");
+
+            System.out.println("Banyak Transaksi\t : " + (omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][0] != null ? omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][0] : 0));
+            System.out.println("Total Pendapatan\t : " + (omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][1] != null ? omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][Integer.valueOf(dayF)-1][1] : 0.0));
+
             System.out.println();
             anoString = "";
             System.out.println("Kembali (y/n) : ");
@@ -581,7 +589,7 @@ public class remain {
         }
     }
 
-    static void omsetBulanan(){
+    static void omsetPenjualan(){
         String tanggal;
         int countTransaction = 0;
         double countIncome = 0;
@@ -599,26 +607,31 @@ public class remain {
         while (true) {
             System.out.println("Transaksi Pada Bulan ke-"+ monthF+" ("+ bulan[Integer.valueOf(monthF)-1] +")");
 
-            for(int i = 0; i < omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1].length; i++){
-                if(omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] != null){
-                    countTransaction += 1;
-                    countIncome += Double.valueOf(omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][1]);
+            for(int i = 0; i < omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1].length; i++){
+                if(omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] != null){
+                    countTransaction += Double.valueOf(omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0]);
+                    countIncome += Double.valueOf(omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][1]);
                 }
             }
 
+            boolean check = false;
             System.out.println("Jumlah total transaksi\t: "+ countTransaction);
             System.out.println("Jumlah total pendapatan\t: "+ countIncome);
             System.out.println("Detail Transaksi : ");
             
-            System.out.println("=================================================================");
+            System.out.println("========================================================================");
             System.out.println("|\tTanggal\t\t|\tTransaksi\t|\tPendapatan\t|");
-            System.out.println("=================================================================");
-            for(int i = 0; i < omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1].length; i++){
-                if(omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] != null){
-                    System.out.println("|\t"+(i+1)+"/"+monthF+"/"+yearF+"\t|\t" + omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] + "\t|\t" + omsetBulanan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][1]+"\t|");
+            System.out.println("========================================================================");
+            for(int i = 0; i < omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1].length; i++){
+                if(omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] != null){
+                    System.out.println("|\t"+(i+1)+"/"+monthF+"/"+yearF+"\t|\t" + omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][0] + "\t\t|\t" + omsetPenjualan[Integer.valueOf(yearF)-1][Integer.valueOf(monthF)-1][i][1]+"\t|");
+                    check = true;
                 }
             }
-            System.out.println("=================================================================");
+            if(check == false){
+                System.out.println("|\t\t Data Kosong. ");
+            }
+            System.out.println("========================================================================");
 
 
             anoString = "";
