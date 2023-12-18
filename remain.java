@@ -4,11 +4,12 @@ public class remain {
     static Scanner input = new Scanner(System.in);
     static String user[][] = { {"kasir", "kasir"}, {"super", "super"} };
     static String bulan [] = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
-    static String username, password, anoString, settingTanggal, day, month, year, session;
-    static double jumlahUang, kembalian, totalBelanja = 0;
+    static String username, password, anoString, settingTanggal, day, month, year, session, potonganPercent=null;
+    static double jumlahUang, kembalian, totalBelanja = 0, potonganHarga=0;
     static String[][][][] omsetPenjualan = new String[3000][12][31][2]; /* tahun|bulan|tanggal|countTransaksi - countIncome */
     static int pilihan;
-    static String[][] menuKafe;
+    static String[][] menuKafe; /* [i] [nama] | [stok] | [harga] | [qtyTra] */
+    static String[][] voucher; /* [i] [kode] | [jumlah %]  */
 
     public static void main(String[] args) {
         System.out.println("=============================");
@@ -77,7 +78,8 @@ public class remain {
                 System.out.println("3. Lihat Menu");
                 System.out.println("4. Transaksi");
                 System.out.println("5. Lihat Omset");
-                System.out.println("6. Logout");
+                System.out.println("6. Tambah Voucher");
+                System.out.println("7. Logout");
                 pilihan = 0;
                 System.out.print("Pilh salah satu (1/2/3/..): ");
                 pilihan = input.nextInt();
@@ -111,6 +113,10 @@ public class remain {
                     case 5:
                         omset();
                     case 6:
+                        storeVoucher();
+                        break;
+
+                    case 7:
                         return;
                     default:
                         System.out.println("\nPilihan anda tidak tersedia.");
@@ -125,8 +131,8 @@ public class remain {
                 System.out.println("2. Tambah Menu");
                 System.out.println("3. Lihat Menu");
                 System.out.println("4. Transaksi");
-                // System.out.println("5. Lihat Omset");
-                System.out.println("5. Logout");
+                System.out.println("5. Tambah Voucher");
+                System.out.println("6. Logout");
                 pilihan = 0;
                 System.out.print("Pilh salah satu (1/2/3/..): ");
                 pilihan = input.nextInt();
@@ -157,9 +163,10 @@ public class remain {
                             transaction();
                         }
                         break;
-                    // case 5:
-                    //     omset();
                     case 5:
+                        storeVoucher();
+                        break;
+                    case 6:
                         return;
                     default:
                         System.out.println("\nPilihan anda tidak tersedia.");
@@ -168,6 +175,43 @@ public class remain {
 
 
         }
+    }
+
+    static void storeVoucher(){
+        int jumlahVoucher = 0;
+        System.out.print("Masukkan jumlah voucher yang ingin ditambahkan : ");
+        jumlahVoucher = input.nextInt();
+
+        voucher = new String[jumlahVoucher][2];
+            for (int i = 0; i < voucher.length; i++) {
+                System.out.println();
+                System.out.println("Voucher ke " + (i + 1));
+
+                System.out.print("Masukkan kode voucher : ");
+                voucher[i][0] = input.next();
+                System.out.print("Masukkan diskon (satuan otomatis dalam bentuk persen) : ");
+                voucher[i][1] = input.next();
+                System.out.println();
+            }
+        while (true) {
+            System.out.println("=================================");
+            System.out.println("|\tKode\t|\tDiskon\t|");
+            System.out.println("=================================");
+            
+            for (int i = 0; i < voucher.length; i++) {
+                System.out.println("|\t"+voucher[i][0]+"\t|\t"+voucher[i][1]+"%\t|" );
+            }
+            System.out.println("=================================");
+
+            anoString = "";
+            System.out.print("Kembali (y/n) ? ");
+            anoString = input.next();
+            if(anoString.equalsIgnoreCase("y")){
+                break;
+            }
+        }
+
+
     }
 
     static boolean checkSetDate(){
@@ -335,7 +379,7 @@ public class remain {
                     System.out.print("Masukkan jumlah yang dipesan :");
                     jumlah = input.nextInt();
                     // detect stok
-                    if(stokLama <= jumlah){
+                    if(stokLama < jumlah){
                         System.out.println("Stok tidak mencukupi.");
                         System.out.println();
                     }else{
@@ -404,6 +448,8 @@ public class remain {
     }
 
     static void transaction() {
+        String redeem = "";
+        boolean check = false;
         System.out.println("====================================================");
         System.out.println();
         System.out.println("=============");
@@ -411,6 +457,52 @@ public class remain {
         System.out.println("=============");
         System.out.println();
         System.out.println("Jumlah uang yang harus anda bayarkan adalah sebesar Rp " + totalBelanja);
+        
+        while (true) {
+            
+            if(voucher != null){
+
+                anoString = "";
+                System.out.print("Apakah anda ingin menggunakan voucher (y/n) ? :");
+                anoString = input.next();
+                if(anoString.equalsIgnoreCase("y")){
+                    System.out.println();
+                    System.out.print("Masukkan kode voucher : ");
+                    redeem = input.next();
+                    
+                    // check
+                    for(int i=0; i < voucher.length; i++){
+                        if(redeem.equals(voucher[i][0])){
+                            check = true;
+                            potonganPercent = voucher[i][1];
+                        }
+                    }
+
+                    if(check == true){
+                        potonganHarga = totalBelanja * Double.valueOf(potonganPercent) / 100;
+                        totalBelanja = totalBelanja - potonganHarga;
+
+                        System.out.println();
+                        System.out.println("Voucher Berhasil di gunakan !");
+                        System.out.println("Anda mendapatkan potongan sebesar " + potonganPercent +"% yang bernilai "+potonganHarga);
+                        break;
+
+                    }else{
+                        System.out.println();
+                        System.out.println("Kode Voucher tidak ditemukan. ");
+                        System.out.println();
+                    }
+                }else{
+                    break;
+                }
+                System.out.println("Jumlah uang yang harus anda bayarkan adalah sebesar Rp " + totalBelanja);
+
+            } else {
+                break;
+            }  
+        }
+
+
         System.out.println();
         System.out.print("Masukkan jumlah uang yang diberikan: ");
         jumlahUang = input.nextDouble();
@@ -454,7 +546,7 @@ public class remain {
             System.out.println();
             System.out.println("Pembayaran Gagal !");
             System.out.println();
-            System.out.println("Maaf, uang yang diberikan kurang. Transaksi dibatalkan.");
+            System.out.println("Maaf, uang yang diberikan kurang.");
             System.out.println();
 
         }
@@ -475,7 +567,15 @@ public class remain {
         }
 
         System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.println("|\tTotal\t\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
+        if(potonganPercent != null){
+            System.out.println("|\tTotal\t\t\t\t\t\t|\t" + (totalBelanja+potonganHarga) + "\t\t\t|");
+            System.out.println("|\tPotongan\t\t\t\t\t|\t" + potonganHarga + "\t\t\t|");
+            System.out.println("|\tTotal Akhir\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
+                    System.out.println("|\t\t\t\t\t\t\t\t\t\t\t|");
+
+        }else{
+            System.out.println("|\tTotal\t\t\t\t\t\t|\t" + totalBelanja + "\t\t\t|");
+        }
         System.out.println("|\tBayar\t\t\t\t\t\t|\t" + jumlahUang + "\t\t\t|");
         System.out.println("|\t\t\t\t\t\t\t\t\t\t\t|");
         System.out.println("|\tKembalian\t\t\t\t\t|\t" + kembalian + "\t\t\t|");
@@ -488,6 +588,8 @@ public class remain {
     static void reset(){
         totalBelanja = 0;
         jumlahUang = 0;
+        potonganPercent = null;
+        potonganHarga = 0;
         kembalian = 0;
         for(int i = 0; i<menuKafe.length; i++){
             menuKafe[i][3]=null;
