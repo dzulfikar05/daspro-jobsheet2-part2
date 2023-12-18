@@ -51,10 +51,12 @@ public class remain {
 
         if (user[0][0].equals(username) && user[0][1].equals(password)) {
             System.out.println("\nLogin Berhasil !");
+            System.out.println("\nAnda login sebagai Kasir");
             session = "kasir";
             listmenu();
         }else if (user[1][0].equals(username) && user[1][1].equals(password)) {
             System.out.println("\nLogin Berhasil !");
+            System.out.println("\nAnda login sebagai Super");
             session = "super";
             listmenu();
         } else {
