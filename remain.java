@@ -133,8 +133,8 @@ public class remain {
                 System.out.println("2. Tambah Menu");
                 System.out.println("3. Lihat Menu");
                 System.out.println("4. Transaksi");
-                System.out.println("5. Tambah Voucher");
-                System.out.println("6. Logout");
+                // System.out.println("5. Tambah Voucher");
+                System.out.println("5. Logout");
                 pilihan = 0;
                 System.out.print("Pilh salah satu (1/2/3/..): ");
                 pilihan = input.nextInt();
@@ -165,10 +165,10 @@ public class remain {
                             transaction();
                         }
                         break;
+                    // case 5:
+                    //     storeVoucher();
+                    //     break;
                     case 5:
-                        storeVoucher();
-                        break;
-                    case 6:
                         return;
                     default:
                         System.out.println("\nPilihan anda tidak tersedia.");
@@ -515,6 +515,7 @@ public class remain {
             // omsetHarian += totalBelanja;
             String oldCountTransaction = omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0] ==  null ? "0" : omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0]; 
             String oldOmsetTransaction = omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] == null ? "0" : omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1]; 
+            
             omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][0] = String.valueOf(Integer.valueOf(oldCountTransaction)+1);
             omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] = String.valueOf(Double.valueOf(oldOmsetTransaction)+totalBelanja);
             // omsetPenjualan[Integer.valueOf(year)-1][Integer.valueOf(month)-1][Integer.valueOf(day)-1][1] = String.valueOf(Integer.valueOf(oldOmsetTransaction == null ? "0" : oldOmsetTransaction)+totalBelanja);
@@ -700,13 +701,13 @@ public class remain {
         // input date
         System.out.println();
         System.out.print("Masukkan tanggal (mm/yyyy) : ");
-        tanggal = input.next();
+        tanggal = input.next(); /* 12/2023 */
 
         // split date
         String[] parts = tanggal.split("/");
         // String dayF = parts[0]; // dd
-        String monthF = parts[0]; // mm
-        String yearF = parts[1]; // yyyy
+        String monthF = parts[0]; // mm 12
+        String yearF = parts[1]; // yyyy 2023
 
         while (true) {
             System.out.println("Transaksi Pada Bulan ke-"+ monthF+" ("+ bulan[Integer.valueOf(monthF)-1] +")");
