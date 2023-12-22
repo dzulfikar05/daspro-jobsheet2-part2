@@ -15,6 +15,10 @@ public class remain {
         System.out.println("=============================");
         System.out.println("| Selamat datang di Cafe JTI |");
         System.out.println("=============================");
+        menu();
+    }
+    
+    static void menu() {
         while (true) {
             System.out.println("");
             System.out.println("1. Login");
@@ -85,8 +89,6 @@ public class remain {
                 pilihan = 0;
                 System.out.print("Pilh salah satu (1/2/3/..): ");
                 pilihan = input.nextInt();
-                System.out.println();
-
                 switch (pilihan) {
                     case 1: 
                         settingTanggal();
@@ -119,7 +121,7 @@ public class remain {
                         break;
 
                     case 7:
-                        return;
+                        menu();
                     default:
                         System.out.println("\nPilihan anda tidak tersedia.");
                 }
@@ -169,7 +171,7 @@ public class remain {
                     //     storeVoucher();
                     //     break;
                     case 5:
-                        return;
+                        menu();
                     default:
                         System.out.println("\nPilihan anda tidak tersedia.");
                 }
