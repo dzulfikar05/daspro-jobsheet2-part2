@@ -20,6 +20,7 @@ public class remain {
     
     static void menu() {
         while (true) {
+            System.out.println();
             System.out.println("");
             System.out.println("1. Login");
             System.out.println("2. Exit");
@@ -607,7 +608,7 @@ public class remain {
         System.out.println();
         System.out.println("1. Menu");
         System.out.println("2. Pemesanan");
-        System.out.println("3. Exit");
+        // System.out.println("3. Exit");
         System.out.print("Pilih salah satu (1/2): ");
 
         pilihan = input.nextInt();
@@ -618,8 +619,7 @@ public class remain {
             case 2:
                 processMenu();
                 break;
-            case 3:
-                return;
+            
             default:
                 System.out.println("\nPilihan anda tidak tersedia.");
         }
